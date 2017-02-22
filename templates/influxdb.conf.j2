@@ -1,0 +1,258 @@
+# {{ ansible_managed }}
+
+{% if influxdb_reporting_disabled %}
+reporting-disabled = true
+{% else %}
+reporting-disabled = false
+{% endif %}
+{% if influxdb_hostname %}
+hostname = "{{ influxdb_hostname }}"
+{% endif %}
+
+[meta]
+  dir = "{{ influxdb_meta_dir }}"
+{% if influxdb_meta_retention_autocreate %}
+  retention-autocreate = true
+{% else %}
+  retention-autocreate = false
+{% endif %}
+{% if influxdb_meta_logging_enabled %}
+  logging-enabled = true
+{% else %}
+  logging-enabled = false
+{% endif %}
+{% if influxdb_meta_pprof_enabled %}
+  pprof-enabled = true
+{% else %}
+  pprof-enabled = false
+{% endif %}
+  lease-duration = "{{ influxdb_meta_lease_duration }}"
+
+[data]
+{% if influxdb_data_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  dir = "{{ influxdb_data_dir }}"
+  wal-dir = "{{ influxdb_data_wal_dir }}"
+{% if influxdb_data_wal_logging_enabled %}
+  wal-logging-enabled = true
+{% else %}
+  wal-logging-enabled = false
+{% endif %}
+{% if influxdb_data_trace_logging_enabled %}
+  trace-logging-enabled = true
+{% else %}
+  trace-logging-enabled = false
+{% endif %}
+{% if influxdb_data_query_log_enabled %}
+  query-log-enabled = true
+{% else %}
+  query-log-enabled = false
+{% endif %}
+  cache-max-memory-size = {{ influxdb_data_cache_max_memory_size }}
+  cache-snapshot-memory-size = {{ influxdb_data_cache_snapshot_memory_size }}
+  cache-snapshot-write-cold-duration = "{{ influxdb_data_cache_snapshot_write_cold_duration }}"
+  compact-min-file-count = "{{ influxdb_data_compact_min_file_count }}"
+  compact-full-write-cold-duration = "{{ influxdb_data_compact_full_write_cold_duration }}"
+  max-points-ber-block = {{ influxdb_data_max_points_per_block }}
+
+[coordinator]
+  write-timeout = "{{ influxdb_coordinator_write_timeout }}"
+  max-concurrent-queries = {{ influxdb_coordinator_max_concurrent_queries }}
+  query-timeout = "{{ influxdb_coordinator_query_timeout }}"
+  log-queries-after = "{{ influxdb_coordinator_log_queries_after }}"
+  max-select-point = {{ influxdb_coordinator_max_select_point }}
+  max-select-series = {{ influxdb_coordinator_max_select_series }}
+  max-select-buckets = {{ influxdb_coordinator_max_select_buckets }}
+
+[retention]
+{% if influxdb_retention_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  check-interval = "{{ influxdb_retention_check_interval }}"
+
+[shard-precreation]
+{% if influxdb_shard_precreation_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  check-interval = "{{ influxdb_shard_precreation_check_interval }}"
+  advance-period = "{{ influxdb_shard_precreation_advance_period }}"
+
+[monitor]
+{% if influxdb_monitor_store_enabled %}
+  store-enabled = true
+{% else %}
+  store-enabled = false
+{% endif %}
+  store-database = "{{ influxdb_monitor_store_database }}"
+  store-interval = "{{ influxdb_monitor_store_interval }}"
+
+[admin]
+{% if influxdb_admin_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  bind-address = "{{ influxdb_admin_bind_address }}"
+{% if influxdb_admin_https_enabled %}
+  https-enabled = true
+{% else %}
+  https-enabled = false
+{% endif %}
+  https-certificate = "{{ influxdb_admin_https_certificate }}"
+
+[http]
+{% if influxdb_http_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  bind-address = "{{ influxdb_http_bind_address }}"
+{% if influxdb_http_auth_enabled %}
+  auth-enabled = true
+{% else %}
+  auth-enabled = false
+{% endif %}
+{% if influxdb_http_log_enabled %}
+  log-enabled = true
+{% else %}
+  log-enabled = false
+{% endif %}
+{% if influxdb_http_write_tracing %}
+  write-tracing = true
+{% else %}
+  write-tracing = false
+{% endif %}
+{% if influxdb_http_pprof_enabled %}
+  pprof-enabled = true
+{% else %}
+  pprof-enabled = false
+{% endif %}
+{% if influxdb_http_https_enabled %}
+  https-enabled = true
+{% else %}
+  https-enabled = false
+{% endif %}
+  https-certificate = "{{ influxdb_http_https_certificate }}"
+  https-private-key = "{{ influxdb_http_https_private_key }}"
+  max-row-limit = {{ influxdb_http_max_row_limit }}
+  realm = "{{ influxdb_http_realm }}"
+
+[subscriber]
+{% if influxdb_subscriber_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  http-timeout = "{{ influxdb_subscriber_http_timeout }}"
+
+[[graphite]]
+{% if influxdb_graphite_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  database = "{{ influxdb_graphite_database }}"
+  bind-address = "{{ influxdb_graphite_bind_address }}"
+  protocol = "{{ influxdb_graphite_protocol }}"
+  consistency-level = "{{ influxdb_graphite_consistency_level }}"
+  batch-size = {{ influxdb_graphite_batch_size }}
+  batch-pending = {{ influxdb_graphite_batch_pending }}
+  batch-timeout = "{{ influxdb_graphite_batch_timeout }}"
+  udp-read-buffer = {{ influxdb_graphite_udp_read_buffer }}
+  separator = "{{ influxdb_graphite_separator }}"
+{% if influxdb_graphite_tags %}
+  tags = [
+{% for tag in influxdb_graphite_tags %}
+{% if not loop.last %}
+    "{{ tag }}",
+{% else %}
+    "{{ tag }}"
+{% endif %}
+{% endfor %}
+  ]
+{% endif %}
+{% if influxdb_graphite_templates %}
+  templates = [
+{% for template in influxdb_graphite_template %}
+{% if not loop.last %}
+    "{{ template }}",
+{% else %}
+    "{{ template }}"
+{% endif %}
+{% endfor %}
+  ]
+{% endif %}
+
+[[collectd]]
+{% if influxdb_collectd_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  bind-address = "{{ influxdb_collectd_bind_address }}"
+  database = "{{ influxdb_collectd_database }}"
+  typesdb = "{{ influxdb_collectd_typesdb }}"
+  batch-size = {{ influxdb_collectd_batch_size }}
+  batch-pending = {{ influxdb_collectd_batch_pending }}
+  batch-timeout = "{{ influxdb_collectd_batch_timeout }}"
+  read-buffer = {{ influxdb_collectd_read_buffer }}
+
+[[opentsdb]]
+{% if influxdb_opentsdb_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  bind-address = "{{ influxdb_opentsdb_bind_address }}"
+  database = "{{ influxdb_opentsdb_database }}"
+  retention-policy = "{{ influxdb_opentsdb_retention_policy }}"
+  consistency-level = "{{ influxdb_opentsdb_consistency_level }}"
+{% if influxdb_opentsdb_tls_enabled %}
+  tls-enabled = true
+{% else %}
+  tls-enabled = false
+{% endif %}
+  certificate = "{{ influxdb_opentsdb_certificate }}"
+{% if influxdb_opentsdb_log_point_errors %}
+  log-point-errors = true
+{% else %}
+  log-point-errors = false
+{% endif %}
+  batch-size = {{ influxdb_opentsdb_batch_size }}
+  batch-pending = {{ influxdb_opentsdb_batch_pending }}
+  batch-timeout = "{{ influxdb_opentsdb_batch_timeout }}"
+
+[[udp]]
+{% if influxdb_udp_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  bind-address = "{{ influxdb_udp_bind_address }}"
+  database = "{{ influxdb_udp_database }}"
+  retention-policy = "{{ influxdb_udp_retention_policy }}"
+  batch-size = {{ influxdb_udp_batch_size }}
+  batch-pending = {{ influxdb_udp_batch_pending }}
+  batch-timeout = "{{ influxdb_udp_batch_timeout }}"
+  read-buffer = {{ influxdb_udp_read_buffer }}
+  udp-payload-size = {{ influxdb_udp_payload_size }}
+
+[continuous_queries]
+{% if influxdb_continuous_queries_log_enabled %}
+  log-enabled = true
+{% else %}
+  log-enabled = false
+{% endif %}
+{% if influxdb_continuous_queries_enabled %}
+  enabled = true
+{% else %}
+  enabled = false
+{% endif %}
+  run-interval = "{{ influxdb_continuous_queries_run_interval }}"

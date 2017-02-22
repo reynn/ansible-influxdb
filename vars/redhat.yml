@@ -1,0 +1,6 @@
+---
+# vars file for influxdb (Ubuntu specific)
+
+influxdb_packages:
+  - influxdb-{{ influxdb_version }}*
+influxdb_group: influxdb

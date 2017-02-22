@@ -1,0 +1,10 @@
+---
+# handlers file for influxdb
+
+- name: restart influxdb
+  become: yes
+  service:
+    name: "{{ influxdb_service_name }}"
+    state: restarted
+  tags:
+    - influxdb

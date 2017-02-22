@@ -1,0 +1,8 @@
+---
+- name: Add influxData yum repository
+  template:
+    src:   etc/yum.repos.d/influxdata.repo.j2
+    dest:  /etc/yum.repos.d/influxdata.repo
+    owner: root
+    group: root
+    mode:  0644

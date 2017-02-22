@@ -1,0 +1,11 @@
+---
+- include: add_influx_repo.yml
+
+- name: Install InfluxDB packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - "{{ influxdb_packages }}"
+  become: yes

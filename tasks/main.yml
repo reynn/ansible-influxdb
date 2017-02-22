@@ -1,0 +1,26 @@
+---
+# tasks file for influxdb
+
+- name: Include distribution specific variables
+  include_vars: "{{ ansible_os_family|lower() }}.yml"
+
+- name: "Install for {{ ansible_distribution }}"
+  include: "{{ ansible_os_family|lower() }}/install.yml"
+
+- name: Create InfluxDB configuration file
+  become: yes
+  template:
+    src: influxdb.conf.j2
+    dest: /etc/influxdb/influxdb.conf
+    owner: root
+    group: "{{ influxdb_group }}"
+    mode: 0644
+  notify:
+    - restart influxdb
+
+- name: Ensure InfluxDB service is started and enabled on boot
+  become: yes
+  service:
+    name: "{{ influxdb_service_name }}"
+    enabled: yes
+    state: started

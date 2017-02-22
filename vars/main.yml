@@ -1,0 +1,4 @@
+---
+# vars file for influxdb
+
+influxdb_service_name: influxdb
