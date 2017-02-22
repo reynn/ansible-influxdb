@@ -1,0 +1,37 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+ansible:
+  group_vars:
+    ubuntu:
+      validate_ssl_cert: no
+docker:
+  containers:
+    # - name: reynn.influxdb.ubuntu1604
+    #   image: ubuntu
+    #   image_version: "16.04"
+    #   ansible_groups:
+    #     - influxdb
+    #     - ubuntu
+    - name: reynn.influxdb.ubuntu1610
+      image: ubuntu
+      image_version: "16.10"
+      ansible_groups:
+        - influxdb
+        - ubuntu
+    - name: reynn.influxdb.centos72
+      image: centos
+      image_version: "7.2.1511"
+      privileged: True
+      ansible_groups:
+        - influxdb
+    - name: reynn.influxdb.centos73
+      image: centos
+      image_version: "7.3.1611"
+      privileged: True
+      ansible_groups:
+        - influxdb
+verifier:
+  name: testinfra
