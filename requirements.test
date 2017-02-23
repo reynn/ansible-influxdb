@@ -14,8 +14,6 @@ colorama==0.3.7
 configparser==3.5.0
 cookiecutter==1.4.0
 cryptography==1.7.2
-docker-py==1.10.6
-docker-pycreds==0.2.1
 docutils==0.13.1
 dopy==0.3.7
 enum34==1.1.6
@@ -47,6 +45,7 @@ pyflakes==1.2.3
 pyparsing==2.1.10
 pytest==3.0.6
 python-dateutil==2.6.0
+python-vagrant==0.5.14
 PyYAML==3.12
 requests==2.13.0
 s3transfer==0.1.10
