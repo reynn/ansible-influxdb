@@ -10,12 +10,11 @@ node('python') {
     if (env.BRANCH_NAME != 'master') {
       def path = pwd()
       def folder = path.substring(path.lastIndexOf('/')+1)
-      def playbook = """
----
+      def playbook =
+"""---
 - hosts: all
   roles:
-    - role: "${folder}"
-      """
+    - role: "${folder}""""
       sh "echo \"${playbook}\" > playbook.yml"
       sh 'molecule test'
     } else {
