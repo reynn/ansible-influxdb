@@ -14,7 +14,7 @@ node('python') {
 """---
 - hosts: all
   roles:
-    - role: "${folder}""""
+    - role: \"${folder}\""""
       sh "echo \"${playbook}\" > playbook.yml"
       sh 'molecule test'
     } else {
