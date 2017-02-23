@@ -11,10 +11,10 @@ node('python') {
       def path = pwd()
       def folder = path.substring(path.lastIndexOf('/')+1)
       def playbook = """
-      ---
-      - hosts: all
-        roles:
-          - role: ${folder}
+---
+- hosts: all
+  roles:
+    - role: "${folder}"
       """
       sh "echo \"${playbook}\" > playbook.yml"
       sh 'molecule test'
