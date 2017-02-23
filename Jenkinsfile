@@ -1,6 +1,6 @@
 node('python') {
   stage('checkout') {
-    scm checkout
+    checkout scm 
   }
   stage('Setup') {
     sh 'pip install -r requirements.test'
