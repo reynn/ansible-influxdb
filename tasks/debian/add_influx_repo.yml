@@ -3,6 +3,7 @@
   apt_key:
     url: https://repos.influxdata.com/influxdb.key
     state: present
+    validate_certs: "{{ validate_ssl_cert|default('yes') }}"
   become: yes
 
 - name: Ensure apt-transport-https is installed

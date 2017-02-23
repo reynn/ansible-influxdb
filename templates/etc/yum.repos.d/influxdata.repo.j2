@@ -1,5 +1,5 @@
 [influxdata]
-name = InfluxData Repository - CentOS \$releasever
+name = InfluxData Repository - CentOS {{ ansible_distribution_major_version }}
 baseurl = {{ influxdb_yum_repo_baseurl }}
 enabled = 1
 gpgcheck = 1

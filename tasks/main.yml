@@ -24,3 +24,5 @@
     name: "{{ influxdb_service_name }}"
     enabled: yes
     state: started
+    use: "{{ service_mgr|default(ansible_service_mgr) }}"
+  when: ansible_virtualization_type != 'docker'
